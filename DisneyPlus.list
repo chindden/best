@@ -13,4 +13,4 @@ DOMAIN-SUFFIX,disneyplus.com
 DOMAIN-SUFFIX,dssott.com
 DOMAIN-SUFFIX,execute-api.us-east-1.amazonaws.com
 DOMAIN-SUFFIX,akamai.net
-HOST-KEYWORD,dssott
+DOMAIN-KEYWORD,dssott
