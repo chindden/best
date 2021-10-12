@@ -18,5 +18,5 @@ DOMAIN-SUFFIX,cbsig.net
 DOMAIN-SUFFIX,cbsivideo.com
 DOMAIN-SUFFIX,paramountplus.com
 DOMAIN-SUFFIX,pplusstatic.com
-DOMAIN-SUFFIX,mtvnservices.com
-USER-AGENT,PPlus*
+DOMAIN-KEYWORD,cbsi.com
+USER-AGENT,ParamountPlus*
