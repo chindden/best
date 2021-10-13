@@ -20,3 +20,4 @@ DOMAIN-SUFFIX,cbs.video
 DOMAIN-SUFFIX,cbsivideo.com
 DOMAIN-SUFFIX,paramountplus.com
 DOMAIN-SUFFIX,pplusstatic.com
+IP-CIDR,151.101.26.133
