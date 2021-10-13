@@ -28,4 +28,4 @@ DOMAIN-SUFFIX,pplusstatic.com
 DOMAIN-SUFFIX,theplatform.com
 DOMAIN-SUFFIX,cbsig.net
 DOMAIN-SUFFIX,fwmrm.net
-# IP-CIDR,151.101.0.0/16
+IP-CIDR,151.101.0.0/16
