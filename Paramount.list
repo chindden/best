@@ -16,6 +16,7 @@ DOMAIN,ads.play.cbsi.video
 DOMAIN,media.amlg.io
 DOMAIN,ore-lgct-rg2.live.ott.irdeto.com
 DOMAIN,7f077.v.fwmrm.net
+DOMAIN,ipv4.link.bravo.k8s.ava.theplatform.com
 DOMAIN-KEYWORD,mtvnservices
 DOMAIN-SUFFIX,cbsaavideo.com
 DOMAIN-SUFFIX,cbsi.com
@@ -24,4 +25,5 @@ DOMAIN-SUFFIX,cbs.video
 DOMAIN-SUFFIX,cbsivideo.com
 DOMAIN-SUFFIX,paramountplus.com
 DOMAIN-SUFFIX,pplusstatic.com
+DOMAIN-SUFFIX,theplatform.com
 IP-CIDR,151.101.0.0/16
