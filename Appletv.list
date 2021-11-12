@@ -5,5 +5,5 @@ DOMAIN,play-edge.itunes.apple.com
 DOMAIN,uts-api.itunes.apple.com
 DOMAIN-SUFFIX,tv.apple.com
 DOMAIN,hls-svod-aoc-ve.itunes.g.aaplimg.com
-DOMAIN,vod-ap3-aoc.tv.v.aaplimg.com
+DOMAIN-SUFFIX,tv.v.aaplimg.com
 DOMAIN-SUFFIX,tv.apple.com.akadns.net
