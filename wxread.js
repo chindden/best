@@ -39,5 +39,5 @@ hostname = mp.weixin.qq.com
 */
 
 var body = $response.body
-    .replace(/<\/script>/, 'setTimeout(()=>window.history.back(),6000); </script>');
+    .replace(/<\/script>/, 'setTimeout(()=>window.history.back(),6000+Math.ceil(Math.random()*4001)); </script>');
 $done({ body });
