@@ -152,6 +152,11 @@ dns:
     - system
 log-level: warning
 mode: rule
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+ipv6: true
+external-controller: 127.0.0.1:9090
 subscribe-url: https://muguacloud.top/api/v1/client/subscribe?token=afffe4b6f205a22f8b7c6da1dbd8a0b3
 proxies: [{
     # CF-vless-亚洲
