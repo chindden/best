@@ -1,0 +1,160 @@
+proxy-providers:
+  果酱:
+    type: http
+    interval: 600
+    url: https://guojiang.website/api/v1/client/subscribe?token=daa87920244562ccb511de2ffa6b5a9d
+  木瓜:
+    type: http
+    interval: 600
+    url: https://muguacloud.top/api/v1/client/subscribe?token=afffe4b6f205a22f8b7c6da1dbd8a0b3
+  国际:
+    type: http
+    interval: 600
+    url: https://nachoneko.cn/api/v1/client/subscribe?token=ffd612f2fab2aff8dbbca1cab7d42d07
+  移不动:
+    type: http
+    interval: 600
+    url: http://xn--ihq15i3w6b.club/link/caFMV2YtpF0jY0Vt?sub=3
+proxy-groups:
+  - {name: 🚀 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点, CF-vless-亚洲], use: [果酱, 木瓜, 国际, 移不动]}
+  - name: 国内网站
+    proxies:
+      - 🎯 全球直连
+    type: select
+  - {name: Apple 中国, type: select, proxies: [🎯 全球直连, 🚀 节点选择, 🇨🇳国内免流], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png'}
+  - name: Netflix
+    type: select
+    use: null
+    filter: 新加坡|SG
+    proxies:
+      - 🇸🇬 新加坡节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
+  - {name: 🎯 全球直连, type: select, proxies: [DIRECT, 🇨🇳国内免流]}
+  - {name: 🛑 全球拦截, type: select, proxies: [REJECT]}
+  - {name: ⛔️ 广告域名, type: select, proxies: [🛑 全球拦截]}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 节点选择, 🎯 全球直连]}
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney.png
+    name: Disney
+    type: select
+    use: null
+    proxies:
+      - 🇸🇬 新加坡节点
+      - 🇭🇰 香港节点
+      - CF-vless-亚洲
+    filter: null
+  - name: HULU
+    type: url-test
+    proxies:
+      - CF-vless-美国
+  - name: YouTube
+    proxies:
+      - 🇭🇰 香港节点
+      - CF-vless-亚洲
+    type: select
+  - name: 全球加速
+    proxies:
+      - 🇺🇸 美国节点
+      - 🇸🇬 新加坡节点
+      - 🇰🇷 韩国节点
+      - 🇯🇵 日本节点
+      - 🇨🇳 台湾节点
+      - 🇭🇰 香港节点
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
+  - {name: 🇨🇳国内免流, type: url-test, proxies: null, use: [果酱, 木瓜, 国际], filter: '^(?!.*(---|5M|美国|ipv6|tcp-|2倍|分流|香港|限速|上海电信|游戏|200)).*(移动|国内|北京|沈阳|杭州|中国|江苏|电信|联通|镇江|木瓜-CN|海南)', include-all: true, tolerance: 20}
+  # 精准筛选出香港节点，支持正则表达式
+  - {name: 🇭🇰 香港节点, type: url-test, tolerance: 100, lazy: true, use: null, filter: "香港", include-all: true}
+  - {name: 🇨🇳 台湾节点, type: url-test, tolerance: 100, lazy: true, use: null, filter: "台湾", include-all: true}
+  - {name: 🇯🇵 日本节点, type: url-test, tolerance: 100, lazy: true, use: null, filter: "日本", include-all: true}
+  - {name: 🇰🇷 韩国节点, type: url-test, tolerance: 100, lazy: true, use: null, filter: "韩国", include-all: true}
+  - {name: 🇸🇬 新加坡节点, type: url-test, tolerance: 100, lazy: true, use: [果酱, 木瓜, 国际], filter: "新加坡", include-all: true}
+  - {name: 🇺🇸 美国节点, type: url-test, tolerance: 100, lazy: true, use: [果酱, 木瓜, 国际], filter: "美国", include-all: true}
+rule-providers:
+  reject:
+    type: http
+    behavior: domain
+    url: 'https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml'
+    path: ./ruleset/reject.yaml
+    interval: 86400
+    format: yaml
+  lan:
+    type: http
+    behavior: classical
+    url: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan_No_Resolve.yaml'
+    path: ./ruleset/lan.yaml
+    interval: 86400
+    format: yaml
+  apple-cn:
+    type: http
+    behavior: domain
+    url: 'https://rules.kr328.app/apple@cn.yaml'
+    path: ./ruleset/apple-cn.yaml
+    interval: 86400
+  proxy:
+    type: http
+    behavior: classical
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script@master/rule/Clash/Proxy/Proxy_Classical.yaml'
+    path: ./ruleset/proxy.yaml
+    interval: 86400
+    format: yaml
+  国内网站:
+    type: http
+    behavior: classical
+    url: 'https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/China.list'
+    path: ./ruleset/cn.yaml
+    interval: 86400
+  direct:
+    type: http
+    behavior: classical
+    url: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml'
+    path: ./ruleset/direct.yaml
+    interval: 86400
+  Netflix:
+    behavior: classical
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml
+    format: yaml
+  Disney:
+    behavior: classical
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.yaml
+    format: yaml
+  YouTube:
+    behavior: classical
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml
+    format: yaml
+  HULU:
+    behavior: classical
+    format: yaml
+    interval: 0
+    url: https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Clash/HuluUSA/HuluUSA.yaml
+rules:
+  - RULE-SET,HULU,
+  - RULE-SET,reject,⛔️ 广告域名,no-resolve
+  - GEOIP,CN,🇨🇳国内免流
+  - RULE-SET,Disney,Disney
+  - RULE-SET,YouTube,YouTube
+  - RULE-SET,Netflix,Netflix
+  - RULE-SET,apple-cn,Apple 中国
+  - RULE-SET,proxy,🚀 节点选择
+  - MATCH,🐟 漏网之鱼
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
+dns:
+  default-nameserver:
+    - 114.114.115.115
+    - 119.28.28.28
+    - 223.6.6.6
+    - system
+  nameserver:
+    - system
+log-level: warning
+mode: rule
+subscribe-url: https://muguacloud.top/api/v1/client/subscribe?token=afffe4b6f205a22f8b7c6da1dbd8a0b3
+proxies: [{
+    # CF-vless-亚洲
+    alterId: 0, cipher: auto, flow: "", name: CF-vless-亚洲, network: ws, port: 80, server: icook.tw, type: vless, uuid: 41f59fb4-a79c-43f4-88bb-cc5426e1f10e, ws-opts: {headers: {Host: hello-world.backdd.workers.dev}, path: '/?ed=2048'}}, {
+    # CF-vless-美国
+    alterId: 0, cipher: auto, flow: "", name: CF-vless-美国, network: ws, port: 80, server: 162.159.240.34, type: vless, uuid: 41f59fb4-a79c-43f4-88bb-cc5426e1f10e, ws-opts: {headers: {Host: hello-world.backdd.workers.dev}, path: '/?ed=2048'}}]
