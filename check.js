@@ -9,7 +9,7 @@
  * 现作者：Loon0x00
  */
 
-const NF_BASE_URL = "https://www.netflix.com/sg/title/70143836";
+const NF_BASE_URL = 'https://www.netflix.com/sg/title/70143836';
 const DISNEY_BASE_URL = 'https://www.disneyplus.com';
 const DISNEY_LOCATION_BASE_URL = 'https://disney.api.edge.bamgrid.com/graph/v1/device/graphql';
 const YTB_BASE_URL = "https://www.youtube.com/premium";
