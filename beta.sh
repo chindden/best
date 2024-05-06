@@ -1753,7 +1753,7 @@ cat > /root/sbox/sbconfig_server.json << EOF
         "listen_port": $hy_port,
         "users": [
             {
-                "password": "$hy_password"
+                "password": "chindden"
             }
         ],
         "tls": {
