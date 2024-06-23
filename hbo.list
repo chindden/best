@@ -9,4 +9,4 @@ DOMAIN-SUFFIX,hbomaxcdn.com
 DOMAIN-SUFFIX,cinemax.com
 DOMAIN-SUFFIX,hbomaxdash.s.llnwi.net
 DOMAIN-SUFFIX,maxgo.com
-PROCESS-NAME,com.hbo.hbonow
+DOMAIN-SUFFIX,cf.prod.media.h264.io
