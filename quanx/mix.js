@@ -47,8 +47,8 @@ if ($response.body) {
                 }, {
                     "quantity": "1",
                     "purchase_date_ms": "1538401707000",
-                    "expires_date": "2028-06-06 06:06:06 Etc\/GMT",
-                    "expires_date_pst": "2028-06-06 06:06:06 America\/Los_Angeles",
+                    "expires_date": "2099-06-06 06:06:06 Etc\/GMT",
+                    "expires_date_pst": "2099-06-06 06:06:06 America\/Los_Angeles",
                     "is_in_intro_offer_period": "false",
                     "transaction_id": "200000539102583",
                     "is_trial_period": "false",
@@ -58,7 +58,7 @@ if ($response.body) {
                     "original_purchase_date_pst": "2018-09-23 04:50:44 America\/Los_Angeles",
                     "original_purchase_date_ms": "1537703444000",
                     "web_order_line_item_id": "200000140095731",
-                    "expires_date_ms": "1843855566000",
+                    "expires_date_ms": "4084380366000",
                     "purchase_date_pst": "2018-10-01 06:48:27 America\/Los_Angeles",
                     "original_purchase_date": "2018-09-23 11:50:44 Etc\/GMT"
                 }, {
