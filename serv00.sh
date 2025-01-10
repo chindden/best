@@ -169,8 +169,7 @@ argo_configure() {
     fi
     if [[ "$argo_choice" == "g" || "$argo_choice" == "G" ]]; then
         ARGO_DOMAIN="gou.tida.us.kg"
-	reading "请输入argo固定隧道域名: $ARGO_DOMAIN"
-        green "你的argo固定隧道域名为:$ARGO_DOMAIN"
+        green "你的argo固定隧道域名为: $ARGO_DOMAIN"
         reading "请输入argo固定隧道密钥（Json或Token。当你粘贴Token时，必须以ey开头）: " ARGO_AUTH
         green "你的argo固定隧道密钥为: $ARGO_AUTH"
     else
