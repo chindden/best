@@ -34,7 +34,7 @@ green "你选择的IP为: $IP"
 read_uuid() {
         reading "请输入统一的uuid密码 (建议回车默认随机): " UUID
         if [[ -z "$UUID" ]]; then
-	   UUID=$(uuidgen -r)
+	   UUID="chindden"
         fi
 	green "你的uuid为: $UUID"
 }
