@@ -1,1 +1,2 @@
-csgo.com#CSGO
+openai.com#
+fbi.gov#
