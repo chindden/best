@@ -30,5 +30,4 @@ box.badd.cc:2053#box.badd.cc
 104.18.138.28:443#US-电信
 104.17.189.106:443#US-电信
 104.17.29.151:8443#US-电信
-openai.com#openai.com
-fbi.gov#fbi.gov
+openai.com:2053#openai.com
