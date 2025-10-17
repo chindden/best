@@ -15,7 +15,7 @@ mfa.gov.ua:2053#mfa.gov.ua
 staticdelivery.nexusmods.com#staticdelivery.nexusmods.com
 
 [2606:4700::]:2053#不死IPV6
-104.16.0.0#104.16.0.0
+104.16.0.0#104.16.0.0/16
 wto.org#wto.org
 198.41.211.32:2053#198.41.211.32
 172.64.50.189:2053#172.64.50.189
