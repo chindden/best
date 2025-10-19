@@ -1,4 +1,5 @@
 cdn.814046.xyz:2053#cdn.814046.xyz
+sg.tencentapp.cn:2053#sg.tencentapp.cn
 acxxrp.460110.xyz:2053#acxxrp.460110.xyz
 cloudflare.182682.xyz:2053#cloudflare.182682.xyz
 fbi.gov#fbi.gov
