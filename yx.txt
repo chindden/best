@@ -2,7 +2,7 @@ cdn.814046.xyz:2053#cdn.814046.xyz
 sg.tencentapp.cn:2053#sg.tencentapp.cn
 acxxrp.460110.xyz:2053#acxxrp.460110.xyz
 cloudflare.182682.xyz:2053#cloudflare.182682.xyz
-fbi.gov#fbi.gov-US
+fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
 cf.877774.xyz#cf.877774.xyz
 openai.com:2053#openai.com
