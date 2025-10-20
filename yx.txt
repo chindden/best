@@ -7,13 +7,9 @@ csgo.com:2053#csgo.com-US
 cf.877774.xyz#cf.877774.xyz
 openai.com:2053#openai.com
 saas.sin.fan:2053#saas.sin.fan
-
 ns.cloudflare.com:2053#ns.cloudflare.com
-ns4.cloudflare.com:2053#ns4.cloudflare.com
-ns7.cloudflare.com:2053#ns7.cloudflare.com
 www.shopify.com:2053#shopify.com
 mfa.gov.ua:2053#mfa.gov.ua
-
 staticdelivery.nexusmods.com#staticdelivery.nexusmods.com
 
 [2803:f800:54:256c:9bc1:49c2:5c13:1610]:2053#IPV6-SG
