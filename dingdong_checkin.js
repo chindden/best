@@ -6,22 +6,30 @@ let magicJS = MagicJS(scriptName, "INFO");
 
 function CheckIn(cookie, body){
   return new Promise((resolve, reject)=>{
+    // 将原先的 form 格式 body 转换为 JSON 对象
+    let bodyObj = {};
+    body.split('&').forEach(kv=>{
+      let [k,v] = kv.split('=');
+      bodyObj[k] = decodeURIComponent(v);
+    });
+
     let checkinOptions = {
       url: 'https://sunquan.api.ddxq.mobi/api/v2/user/signin/',
       headers: {
-        "Accept": "*/*",
+        "Accept": "application/json, text/plain, */*",
         "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": "zh-cn",
         "Connection": "keep-alive",
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json;charset=UTF-8",   // ✅ 改成 JSON
         "Cookie": cookie,
         "Host": "sunquan.api.ddxq.mobi",
         "Origin": "https://activity.m.ddxq.mobi",
         "Referer": "https://activity.m.ddxq.mobi/",
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 xzone/9.15.1 station_id/5500fe01916edfe0738b4e43"
       },
-      body: body
+      body: JSON.stringify(bodyObj)  // ✅ 转成 JSON 字符串
     }
+
     magicJS.post(checkinOptions, (err, resp, data)=>{
       if (err){
         magicJS.logError(`签到失败，请求异常：${err}`);
@@ -31,7 +39,7 @@ function CheckIn(cookie, body){
         try{
           let obj = JSON.parse(data);
           if (obj.code === 0){
-            magicJS.logInfo(`签到成功，连续签到${obj.data.sign_series}，获取积分${obj.data.point}，优惠券${obj.data.ticket_money}!`)
+            magicJS.logInfo(`签到成功，连续签到${obj.data.sign_series}天，获取积分${obj.data.point}，优惠券${obj.data.ticket_money}!`)
             resolve([obj.data.sign_series, obj.data.point, obj.data.ticket_money]);
           }
           else{
@@ -47,6 +55,7 @@ function CheckIn(cookie, body){
     })
   })
 }
+
 
 ;(async()=>{
   if (magicJS.isRequest && getCookieRegex.test(magicJS.request.url)){
