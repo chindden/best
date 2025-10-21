@@ -15,6 +15,7 @@ staticdelivery.nexusmods.com#staticdelivery.nexusmods.com
 [2803:f800:54:256c:9bc1:49c2:5c13:1610]:2053#IPV6-SG
 [2803:f800:54:256c:9bc1:49c2:5c13:aaaa]:2053#IPV6-SG
 [2400:cb00:f00e:9065:8284:fbbe:9fc:63cd]:2053#IPV6-SG
+[2606:4700::]:2053#2606:4700::US
 104.16.0.0#104.16.0.0/16
 wto.org#wto.org
 198.41.211.32:2053#198.41.211.32
