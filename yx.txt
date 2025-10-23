@@ -5,6 +5,7 @@ cloudflare.182682.xyz:2053#cloudflare.182682.xyz
 fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
 bestcf.top:2053#bestcf.top-US
+
 openai.com:2053#openai.com
 saas.sin.fan:2053#saas.sin.fan
 ns.cloudflare.com:2053#ns.cloudflare.com
@@ -15,7 +16,6 @@ staticdelivery.nexusmods.com#staticdelivery.nexusmods.com
 [2803:f800:54:256c:9bc1:49c2:5c13:1610]:2053#IPV6-SG
 [2803:f800:54:256c:9bc1:49c2:5c13:aaaa]:2053#IPV6-SG
 [2400:cb00:f00e:9065:8284:fbbe:9fc:63cd]:2053#IPV6-SG
-[2606:4700::]:2053#2606:4700-US
 104.16.0.0#104.16.0.0/16
 wto.org#wto.org
 198.41.211.32:2053#198.41.211.32
@@ -26,14 +26,13 @@ cf.090227.xyz:2053#cf.090227.xyz
 download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com
 box.badd.cc:2053#box.badd.cc
 
-
-210.61.97.241:81#TW
-183.236.51.220:7005#TW
-183.236.51.201:7005#TW
-198.41.211.38:443#SG
+[2606:4700::]:2053#2606:4700-US
 104.18.138.28:443#US
 104.17.189.106:443#US
 104.17.29.151:8443#US
+183.236.51.220:7005#TW
+183.236.51.201:7005#TW
+198.41.211.38:443#SG
 62.112.221.177:6633#UK
 
 20.167.42.198:2053#澳大利亚
