@@ -4,7 +4,6 @@ acxxrp.460110.xyz:2053#acxxrp.460110.xyz
 cloudflare.182682.xyz:2053#cloudflare.182682.xyz
 fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
-bestcf.top:2053#bestcf.top-US
 
 openai.com:2053#openai.com
 saas.sin.fan:2053#saas.sin.fan
