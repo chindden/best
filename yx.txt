@@ -6,7 +6,8 @@ fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
 
 openai.com:2053#openai.com
-saas.sin.fan:2053#saas.sin.fan
+saas.sin.fan:2053#saas.sin.fan-JP
+download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
 ns.cloudflare.com:2053#ns.cloudflare.com
 www.shopify.com:2053#shopify.com
 mfa.gov.ua:2053#mfa.gov.ua
@@ -15,20 +16,20 @@ staticdelivery.nexusmods.com#staticdelivery.nexusmods.com
 [2803:f800:54:256c:9bc1:49c2:5c13:1610]:2053#IPV6-SG
 [2803:f800:54:256c:9bc1:49c2:5c13:aaaa]:2053#IPV6-SG
 [2400:cb00:f00e:9065:8284:fbbe:9fc:63cd]:2053#IPV6-SG
-104.16.0.0#104.16.0.0/16
+
 wto.org#wto.org
 198.41.211.32:2053#198.41.211.32
 172.64.50.189:2053#172.64.50.189
 172.64.153.46:2053#172.64.153.46
-
 cf.090227.xyz:2053#cf.090227.xyz
-download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com
+
 box.badd.cc:2053#box.badd.cc
 
 [2606:4700::]:2053#2606:4700-US
 104.18.138.28:443#US
 104.17.189.106:443#US
 104.17.29.151:8443#US
+104.16.0.0#US
 
 108.162.198.0:2053#JP
 162.159.38.0:2053#JP
