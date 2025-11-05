@@ -10,7 +10,7 @@
 4. 复制下面的代码，粘贴到控制台，按 Enter：
 
 ```javascript
-(async()=>{let a=[],b=1;for(;true;){const c=await fetch(`/api/v1/zones?per_page=50&page=${b}`,{credentials:'include'}),d=await c.json();if(!d.success)break;a=a.concat(d.result);if(d.result_info.page>=d.result_info.total_pages)break;b++}let e=[];for(const f of a){const g=await fetch(`/api/v1/zones/${f.id}/subscription`,{credentials:'include'}),h=await g.json();if(h.success&&h.result.component_values?.snippets>0){e.push({domain:f.name,snippets:h.result.component_values.snippets,zoneId:f.id})}await new Promise(i=>setTimeout(i,100))}console.log('%c✅ 查询完成！已开通Snippets的域名:','color:#00aa00;font-weight:bold;font-size:14px');console.table(e);window.cfSnippets=e;})();
+(async()=>{let a=[],b=1;while(true){const c=await fetch('/api/v1/zones?per_page=50&page='+b,{credentials:'include'}),d=await c.json();if(!d.success||!d.result)break;a=a.concat(d.result);if(d.result_info.page>=d.result_info.total_pages)break;b++}let e=[];for(const f of a){try{const g=await fetch('/api/v1/zones/'+f.id+'/subscription',{credentials:'include'}),h=await g.json();if(h.success&&h.result&&h.result.component_values&&h.result.component_values.snippets>0){e.push({domain:f.name,snippets:h.result.component_values.snippets,plan:f.plan?f.plan.name:'Unknown'})}}catch(i){}await new Promise(j=>setTimeout(j,100))}console.log('='.repeat(50));console.log('Found '+e.length+' domains with Snippets:');console.table(e);window.cfSnippets=e;})();
 ```
 
 5. 完成！结果会以表格形式显示

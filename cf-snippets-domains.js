@@ -8,7 +8,9 @@
 
 (async () => {
   try {
-    console.log('%c🔍 开始查询Cloudflare Snippets域名...', 'color: #0066cc; font-weight: bold; font-size: 14px');
+    console.log('='.repeat(60));
+    console.log('开始查询Cloudflare Snippets域名...');
+    console.log('='.repeat(60));
     console.log('');
 
     // 获取所有Zone（域名）
@@ -16,7 +18,7 @@
     let page = 1;
     let hasMore = true;
 
-    console.log('📋 第一步: 获取账号下的所有Zone...');
+    console.log('[Step 1] 获取账号下的所有Zone...');
     
     while (hasMore) {
       const zonesResponse = await fetch('/api/v1/zones?per_page=50&page=' + page, {
@@ -47,7 +49,7 @@
     let snippetsDisabledZones = [];
     let errorZones = [];
 
-    console.log('🔎 第二步: 检查每个Zone的Snippets权限...\n');
+    console.log('[Step 2] 检查每个Zone的Snippets权限...\n');
 
     for (let index = 0; index < allZones.length; index++) {
       const zone = allZones[index];
@@ -119,7 +121,7 @@
 
     // 输出已开通Snippets的域名
     if (snippetsEnabledZones.length > 0) {
-      console.log('\n%c已开通Snippets权限的域名:', 'color: #00aa00; font-weight: bold; font-size: 13px');
+      console.log('\n[ENABLED] 已开通Snippets权限的域名:');
       console.table(snippetsEnabledZones.map((zone, idx) => ({
         '序号': idx + 1,
         '域名': zone.name,
@@ -129,12 +131,12 @@
         '套餐': zone.plan
       })));
     } else {
-      console.log('\n%c❌ 没有找到已开通Snippets权限的域名', 'color: #ff6600; font-weight: bold');
+      console.log('\n[INFO] 没有找到已开通Snippets权限的域名');
     }
 
     // 输出未开通Snippets的域名
     if (snippetsDisabledZones.length > 0) {
-      console.log('\n%c未开通Snippets权限的域名:', 'color: #ff9900; font-weight: bold; font-size: 13px');
+      console.log('\n[DISABLED] 未开通Snippets权限的域名:');
       console.table(snippetsDisabledZones.map((zone, idx) => ({
         '序号': idx + 1,
         '域名': zone.name,
@@ -145,7 +147,7 @@
 
     // 输出失败的Zone
     if (errorZones.length > 0) {
-      console.log('\n%c检查失败的域名:', 'color: #ff0000; font-weight: bold; font-size: 13px');
+      console.log('\n[ERRORS] 检查失败的域名:');
       console.table(errorZones.map((zone, idx) => ({
         '序号': idx + 1,
         '域名': zone.name,
@@ -168,17 +170,17 @@
       errorZones
     };
 
-    console.log('\n%c✅ 查询完成！结果已保存到变量 cfSnippetsResult', 'color: #00aa00; font-weight: bold; font-size: 12px');
-    console.log('💡 可以在控制台输入 cfSnippetsResult 查看完整结果');
-    console.log('💡 可以输入 cfSnippetsResult.snippetsEnabledZones 查看已开通Snippets的域名列表');
+    console.log('\n[SUCCESS] 查询完成！结果已保存到变量 cfSnippetsResult');
+    console.log('[INFO] 可以在控制台输入 cfSnippetsResult 查看完整结果');
+    console.log('[INFO] 可以输入 cfSnippetsResult.snippetsEnabledZones 查看已开通Snippets的域名列表');
 
     // 保存到全局变量供后续使用
     window.cfSnippetsResult = result;
 
     return result;
 
-  } catch (error) {
-    console.error('%c❌ 发生错误:', 'color: #ff0000; font-weight: bold', error);
+    } catch (error) {
+    console.error('[ERROR] 发生错误:', error);
     throw error;
-  }
+    }
 })();
