@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudflare Snippets 域名查询工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            color: #667eea;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .loading.active {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+            width: 16px;
+            height: 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .stat-enabled .stat-number { color: #28a745; }
+        .stat-disabled .stat-number { color: #ffc107; }
+        .stat-error .stat-number { color: #dc3545; }
+        .stat-total .stat-number { color: #667eea; }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        .domain-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-inactive {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .export-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .console-code {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 15px;
+            color: #721c24;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Cloudflare Snippets 域名查询工具</h1>
+        <p class="subtitle">查询您的 Cloudflare 账号中所有已开通 Snippets 权限的域名</p>
+
+        <div class="info-box">
+            💡 <strong>使用说明：</strong> 需要在已登录 Cloudflare Dashboard 的浏览器中使用。点击下面的按钮开始查询，系统会自动检查您账号下所有域名的 Snippets 权限状态。
+        </div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="startQuery()" id="queryBtn">
+                开始查询
+            </button>
+            <button class="btn-secondary" onclick="copyConsoleCode()">
+                📋 复制控制台代码
+            </button>
+            <button class="btn-secondary" onclick="showHelp()">
+                ❓ 使用帮助
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <svg class="spinner" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="60" stroke-dashoffset="0"></circle>
+            </svg>
+            <span id="loadingText">正在查询...</span>
+        </div>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        let queryInProgress = false;
+
+        async function startQuery() {
+            if (queryInProgress) return;
+            
+            const btn = document.getElementById('queryBtn');
+            const loading = document.getElementById('loading');
+            const resultsDiv = document.getElementById('results');
+
+            queryInProgress = true;
+            btn.disabled = true;
+            loading.classList.add('active');
+            resultsDiv.innerHTML = '';
+
+            try {
+                // 检查是否在 CF Dashboard
+                const dashboardCheck = await fetch('/api/v1/zones?per_page=1', {
+                    credentials: 'include'
+                }).catch(() => null);
+
+                if (!dashboardCheck) {
+                    throw new Error('请在 Cloudflare Dashboard 页面中打开此工具');
+                }
+
+                // 执行查询脚本
+                const response = await fetch('cf-snippets-domains.js');
+                const script = await response.text();
+                
+                // 重定向 console.log 以捕获输出
+                const logs = [];
+                const originalLog = console.log;
+                console.log = function(...args) {
+                    logs.push(args);
+                    originalLog.apply(console, args);
+                };
+
+                // 执行脚本
+                eval(script);
+
+                // 等待异步操作完成
+                await new Promise(resolve => {
+                    const checkInterval = setInterval(() => {
+                        if (window.cfSnippetsResult) {
+                            clearInterval(checkInterval);
+                            resolve();
+                        }
+                    }, 100);
+                    setTimeout(() => clearInterval(checkInterval), 60000);
+                });
+
+                // 恢复 console.log
+                console.log = originalLog;
+
+                // 显示结果
+                displayResults(window.cfSnippetsResult);
+
+            } catch (error) {
+                console.error(error);
+                resultsDiv.innerHTML = `
+                    <div class="error-message">
+                        ❌ 查询失败: ${error.message}
+                        <div style="margin-top: 10px; font-size: 12px;">
+                            提示: 请确保您已登录 Cloudflare Dashboard，然后刷新此页面重试。
+                        </div>
+                    </div>
+                `;
+            } finally {
+                queryInProgress = false;
+                btn.disabled = false;
+                loading.classList.remove('active');
+            }
+        }
+
+        function displayResults(result) {
+            const resultsDiv = document.getElementById('results');
+            const { summary, snippetsEnabledZones, snippetsDisabledZones, errorZones } = result;
+
+            let html = `
+                <div class="stats">
+                    <div class="stat-card stat-total">
+                        <div class="stat-label">总域名数</div>
+                        <div class="stat-number">${summary.total}</div>
+                    </div>
+                    <div class="stat-card stat-enabled">
+                        <div class="stat-label">已开通</div>
+                        <div class="stat-number">${summary.snippetsEnabled}</div>
+                    </div>
+                    <div class="stat-card stat-disabled">
+                        <div class="stat-label">未开通</div>
+                        <div class="stat-number">${summary.snippetsDisabled}</div>
+                    </div>
+                    <div class="stat-card stat-error">
+                        <div class="stat-label">检查失败</div>
+                        <div class="stat-number">${summary.errors}</div>
+                    </div>
+                </div>
+            `;
+
+            if (snippetsEnabledZones.length > 0) {
+                html += `
+                    <h3 style="color: #28a745; margin: 20px 0 15px; font-size: 16px;">✓ 已开通 Snippets 的域名 (${snippetsEnabledZones.length})</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>域名</th>
+                                    <th>Zone ID</th>
+                                    <th>Snippets配额</th>
+                                    <th>套餐</th>
+                                    <th>状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                snippetsEnabledZones.forEach(zone => {
+                    html += `
+                        <tr>
+                            <td><span class="domain-name">${escapeHtml(zone.name)}</span></td>
+                            <td><code style="font-size: 11px;">${escapeHtml(zone.zoneId.substring(0, 12))}...</code></td>
+                            <td><strong>${zone.snippets}</strong></td>
+                            <td>${escapeHtml(zone.plan)}</td>
+                            <td><span class="badge badge-active">${escapeHtml(zone.status)}</span></td>
+                        </tr>
+                    `;
+                });
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="export-group">
+                        <button class="btn-secondary" onclick="exportDomainList('enabled')">📥 导出域名列表</button>
+                        <button class="btn-secondary" onclick="downloadJSON('enabled')">⬇️ 下载详细数据</button>
+                    </div>
+                `;
+            }
+
+            if (snippetsDisabledZones.length > 0) {
+                html += `
+                    <h3 style="color: #ffc107; margin: 25px 0 15px; font-size: 16px;">✗ 未开通 Snippets 的域名 (${snippetsDisabledZones.length})</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>域名</th>
+                                    <th>Zone ID</th>
+                                    <th>套餐</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                snippetsDisabledZones.forEach(zone => {
+                    html += `
+                        <tr>
+                            <td><span class="domain-name">${escapeHtml(zone.name)}</span></td>
+                            <td><code style="font-size: 11px;">${escapeHtml(zone.zoneId.substring(0, 12))}...</code></td>
+                            <td>${escapeHtml(zone.plan)}</td>
+                        </tr>
+                    `;
+                });
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            if (errorZones.length > 0) {
+                html += `
+                    <h3 style="color: #dc3545; margin: 25px 0 15px; font-size: 16px;">⚠ 检查失败的域名 (${errorZones.length})</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>域名</th>
+                                    <th>Zone ID</th>
+                                    <th>错误信息</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                errorZones.forEach(zone => {
+                    html += `
+                        <tr>
+                            <td><span class="domain-name">${escapeHtml(zone.name)}</span></td>
+                            <td><code style="font-size: 11px;">${escapeHtml(zone.zoneId.substring(0, 12))}...</code></td>
+                            <td><span class="badge badge-error">${escapeHtml(zone.error)}</span></td>
+                        </tr>
+                    `;
+                });
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            resultsDiv.innerHTML = html;
+        }
+
+        function exportDomainList(type) {
+            if (!window.cfSnippetsResult) return;
+
+            let domains = [];
+            if (type === 'enabled') {
+                domains = window.cfSnippetsResult.snippetsEnabledZones.map(z => z.name);
+            }
+
+            const text = domains.join('\n');
+            const blob = new Blob([text], { type: 'text/plain' });
+            downloadBlob(blob, `cf-snippets-domains-${type}-${new Date().toISOString().split('T')[0]}.txt`);
+        }
+
+        function downloadJSON(type) {
+            if (!window.cfSnippetsResult) return;
+
+            let data = window.cfSnippetsResult;
+            if (type === 'enabled') {
+                data = { snippetsEnabledZones: window.cfSnippetsResult.snippetsEnabledZones };
+            }
+
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            downloadBlob(blob, `cf-snippets-${type}-${new Date().toISOString().split('T')[0]}.json`);
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function copyConsoleCode() {
+            const code = `
+// 在浏览器控制台执行以下代码查询 Snippets 域名
+(async () => {
+  try {
+    let allZones = [];
+    let page = 1;
+    while (true) {
+      const res = await fetch(\`/api/v1/zones?per_page=50&page=\${page}\`, { credentials: 'include' });
+      const data = await res.json();
+      if (!data.success) break;
+      allZones = allZones.concat(data.result);
+      if (data.result_info.page >= data.result_info.total_pages) break;
+      page++;
+    }
+    
+    let enabled = [];
+    for (const zone of allZones) {
+      const res = await fetch(\`/api/v1/zones/\${zone.id}/subscription\`, { credentials: 'include' });
+      const data = await res.json();
+      if (data.success && data.result.component_values?.snippets > 0) {
+        enabled.push({ name: zone.name, snippets: data.result.component_values.snippets });
+      }
+      await new Promise(r => setTimeout(r, 100));
+    }
+    
+    console.table(enabled);
+    window.cfSnippets = enabled;
+  } catch(e) { console.error(e); }
+})();`;
+
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✓ 代码已复制到剪贴板');
+            }).catch(() => {
+                prompt('复制下面的代码:', code);
+            });
+        }
+
+        function showHelp() {
+            alert(`
+使用说明：
+
+1. 确保您已登录 Cloudflare Dashboard
+2. 点击"开始查询"按钮
+3. 系统会自动检查您账号下所有域名
+4. 查询完成后会显示已开通 Snippets 的域名列表
+
+常见问题：
+- 如果提示失败，请刷新页面重试
+- 查询速度取决于域名数量（大约每个域名 100ms）
+- 结果仅在浏览器本地显示，不会上传任何服务器
+
+导出选项：
+- 可以导出域名列表为 TXT 文件
+- 可以下载完整数据为 JSON 文件
+            `);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
