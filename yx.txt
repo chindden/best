@@ -9,7 +9,6 @@ shopify.com:2053#shopify.com-US
 saas.sin.fan:2053#saas.sin.fan-JP
 download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
 ns.cloudflare.com:2053#ns.cloudflare.com
-www.shopify.com:2053#shopify.com
 mfa.gov.ua:2053#mfa.gov.ua
 
 [2803:f800:54:256c:9bc1:49c2:5c13:1610]:2053#IPV6-SG
