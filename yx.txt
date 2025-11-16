@@ -4,6 +4,7 @@ cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
 
 fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
+shopify.com:2053#shopify.com-US
 
 saas.sin.fan:2053#saas.sin.fan-JP
 download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
