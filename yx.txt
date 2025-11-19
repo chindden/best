@@ -1,4 +1,4 @@
-cf.090227.xyz:8443#cf.090227.xyz
+cf.090227.xyz:2053#cf.090227.xyz
 cdn.814046.xyz:2053#cdn.814046.xyz
 cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
 
