@@ -5,6 +5,7 @@ cf.090227.xyz:2053#cf.090227.xyz
 fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
 shopify.com:2053#shopify.com-US
+[2606:4700::]:2053#IPV6-US
 
 saas.sin.fan:2053#saas.sin.fan-JP
 download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
