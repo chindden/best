@@ -7,6 +7,7 @@ csgo.com:2053#csgo.com-US
 shopify.com:2053#shopify.com-US
 [2606:4700::]:2053#IPV6-US
 
+cn.tencentapp.cn:2053#tencentapp.cn-JP
 saas.sin.fan:2053#saas.sin.fan-JP
 download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
 ns.cloudflare.com:2053#ns.cloudflare.com
@@ -33,5 +34,7 @@ box.badd.cc:2053#box.badd.cc
 172.105.191.21:443#澳大利亚
 152.67.101.72:23010#澳大利亚
 192.9.183.128:45673#澳大利亚
+
+221.139.94.50:50001#KR
 
 
