@@ -5,6 +5,7 @@ cf.090227.xyz:2053#cf.090227.xyz
 
 fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
+www.visa.com:2053#visa.com-US
 shopify.com:2053#shopify.com-US
 [2606:4700::]:2053#IPV6-US
 
