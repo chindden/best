@@ -41,7 +41,7 @@ var $nobyda = nobyda();
       P00003 = cookie.match(/P00003=(.*?);/)[1];
       DFP = cookie.match(/__dfp=(\w+)/)[1];
       await login();
-      await Checkin();
+      //await Checkin();
       
       // +++ 新增: V7 领取白金会员时长 +++
       await VipGrowth(); 
