@@ -101,8 +101,6 @@ function login() {
 }
 
 
-}
-
 
 // +++ 修正版: V7 免费升级星钻 (基于用户提供的源码) +++
 function VipGrowth() {
