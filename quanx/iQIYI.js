@@ -137,7 +137,7 @@ function VipGrowth() {
           // 如果 msg 包含 "已领取" 或 "不满足"，只记录日志不弹窗干扰
           const msg = obj.msg || "未知错误";
           if (msg.includes("已领取") || msg.includes("上限") || obj.code === "A00002") {
-             console.log(`爱奇艺-V7升星钻✨: `xmsg}`);
+             console.log(`爱奇艺-V7升星钻: `xmsg}`);
              resolve();
              return;
           }
