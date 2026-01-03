@@ -7,6 +7,7 @@ fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
 www.visa.com:2053#visa.com-US
 shopify.com:2053#shopify.com-US
+104.17.209.110:2053#104.17.209.110-US
 [2606:4700::]:2053#IPV6-US
 
 cn.tencentapp.cn:2053#tencentapp.cn-JP
