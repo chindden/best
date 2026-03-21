@@ -1,5 +1,5 @@
-cdn.814046.xyz:2053#cdn.814046.xyz-SG
-cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz
+cdn.814046.xyz:2053#cdn.814046.xyz-JP
+cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-JP
 172.64.151.3:2053#172.64.151.3-SG
 cf.090227.xyz:2053#cf.090227.xyz-SG
 
@@ -9,11 +9,10 @@ www.visa.com:2053#visa.com-US
 shopify.com:2053#shopify.com-US
 [2606:4700::]:2053#IPV6-US
 
-cn.tencentapp.cn:2053#tencentapp.cn-JP
-saas.sin.fan:2053#saas.sin.fan-JP
+cn.tencentapp.cn:2053#tencentapp.cn-SG
+saas.sin.fan:2053#saas.sin.fan-SG
 download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
-ns.cloudflare.com:2053#ns.cloudflare.com
-mfa.gov.ua:2053#mfa.gov.ua
+box.badd.cc:2053#box.badd.cc-JP
 
 [2803:f800:54:256c:9bc1:49c2:5c13:1610]:2053#IPV6-SG
 [2803:f800:54:256c:9bc1:49c2:5c13:aaaa]:2053#IPV6-SG
@@ -24,12 +23,3 @@ wto.org#wto.org-SG
 172.64.50.189:2053#172.64.50.189-SG
 172.64.153.46:2053#172.64.153.46-SG
 cf.090227.xyz:2053#cf.090227.xyz-SG
-
-box.badd.cc:2053#box.badd.cc-JP
-
-
-
-
-
-
-
