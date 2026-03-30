@@ -1,5 +1,5 @@
-cdn.814046.xyz:2053#cdn.814046.xyz-JP
-cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-JP
+cdn.814046.xyz:2053#cdn.814046.xyz-SG
+cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
 172.64.151.3:2053#172.64.151.3-SG
 cf.090227.xyz:2053#cf.090227.xyz-SG
 
