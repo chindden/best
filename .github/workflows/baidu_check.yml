@@ -1,0 +1,25 @@
+name: baidu_check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * 1"
+
+jobs:
+  baidu-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 执行脚本
+        env:
+          BAIDU_COOKIE: ${{ secrets.BAIDU_COOKIE }}
+        run: node baidu_check.js
