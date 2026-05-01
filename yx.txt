@@ -3,6 +3,7 @@ box.badd.cc:2053#box.badd.cc-JP
 108.162.198.110:2096#108.162.198.110-JP
 
 83.229.123.217:443#83.229.123.217-HK
+45.136.14.61:2053#45.136.14.61-HK
 
 download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-SG
 cdn.814046.xyz:2053#cdn.814046.xyz-SG
