@@ -3,7 +3,7 @@ name: baidu_check
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 1 6 * *"
+    - cron: "0 1 5 * *"
 
 jobs:
   baidu-check:
