@@ -2,10 +2,14 @@ box.badd.cc:2053#box.badd.cc-JP
 162.159.44.238:2096#162.159.44.238-JP
 108.162.198.110:2096#108.162.198.110-JP
 
+download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
+cn.tencentapp.cn:2053#tencentapp.cn-JP
+saas.sin.fan:2053#saas.sin.fan-JP
+
 83.229.123.217:443#83.229.123.217-HK
 45.136.14.61:2053#45.136.14.61-HK
 
-download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-SG
+
 cdn.814046.xyz:2053#cdn.814046.xyz-SG
 cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
 172.64.151.3:2053#172.64.151.3-SG
@@ -18,8 +22,7 @@ www.visa.com:2053#visa.com-US
 shopify.com:2053#shopify.com-US
 [2606:4700::]:2053#IPV6-US
 
-cn.tencentapp.cn:2053#tencentapp.cn-SG
-saas.sin.fan:2053#saas.sin.fan-SG
+
 
 
 
