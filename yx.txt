@@ -7,7 +7,6 @@ cn.tencentapp.cn:2053#tencentapp.cn-JP
 saas.sin.fan:2053#saas.sin.fan-JP
 
 83.229.123.217:443#83.229.123.217-HK
-45.136.14.61:2053#45.136.14.61-HK
 
 
 cdn.814046.xyz:2053#cdn.814046.xyz-SG
@@ -15,7 +14,7 @@ cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
 172.64.151.3:2053#172.64.151.3-SG
 cf.090227.xyz:2053#cf.090227.xyz-SG
 
-
+154.21.89.11#154.21.89.11-US
 fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
 www.visa.com:2053#visa.com-US
