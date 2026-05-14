@@ -14,7 +14,8 @@ cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
 172.64.151.3:2053#172.64.151.3-SG
 cf.090227.xyz:2053#cf.090227.xyz-SG
 
-154.21.89.11#154.21.89.11-US
+fbi.gov:80#80us
+154.21.89.11:443#154.21.89.11-US
 fbi.gov:2053#fbi.gov-US
 csgo.com:2053#csgo.com-US
 www.visa.com:2053#visa.com-US
