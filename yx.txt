@@ -26,8 +26,8 @@ shopify.com:2053#shopify.com-US
 
 
 
-[2803:f800:54:256c:9bc1:49c2:5c13:1610]:2053#IPV6-SG
-[2803:f800:54:256c:9bc1:49c2:5c13:aaaa]:2053#IPV6-SG
+[2605:52c0:2:2977:8048:b8ff:feb6:f6cd]:443#IPV6-US
+[2605:52c0:2:1d1c:be24:11ff:fe71:166a]:443#IPV6-US
 
 
 wto.org#wto.org-SG
