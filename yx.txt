@@ -9,8 +9,12 @@ download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
 cn.tencentapp.cn:2053#tencentapp.cn-JP
 saas.sin.fan:2053#saas.sin.fan-JP
 
+154.12.188.247#154.12.188.247-HK-DMIT
+154.12.188.216#154.12.188.216-HK-DMIT
+154.12.188.114#154.12.188.114-HK-DMIT
+38.47.108.54#38.47.108.54-HK-Cloudie
+38.47.103.100#38.47.103.100-HK-Cloudie
 83.229.123.217:443#83.229.123.217-HK
-
 
 cdn.814046.xyz:2053#cdn.814046.xyz-SG
 cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
