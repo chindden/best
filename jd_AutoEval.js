@@ -3,7 +3,7 @@
 const fs = require("fs");
 const https = require("https");
 const path = require("path");
-const vm = require("vm");
+const { spawnSync } = require("child_process");
 
 const SOURCE_URL =
   process.env.JD_AUTOEVAL_SOURCE_URL ||
@@ -28,16 +28,22 @@ async function main() {
   const source = await downloadText(SOURCE_URL);
   console.log("上游脚本下载完成，长度：" + source.length);
 
-  const upstreamModule = { exports: {} };
-  const runner = vm.runInThisContext(
-    `(function(require, module, exports, __filename, __dirname) {\n${source}\n})`,
-    { filename: "jd_AutoEval.upstream.js" }
-  );
-  const hiddenEnv = hideCiEnvironment();
-  try {
-    runner(require, upstreamModule, upstreamModule.exports, path.join(__dirname, "jd_AutoEval.upstream.js"), __dirname);
-  } finally {
-    restoreEnvironment(hiddenEnv);
+  const upstreamPath = path.join(__dirname, "jd_AutoEval.upstream.js");
+  fs.writeFileSync(upstreamPath, source);
+  console.log("已写入上游脚本：" + upstreamPath);
+
+  const childEnv = buildChildEnvironment();
+  const child = spawnSync(process.execPath, [upstreamPath], {
+    cwd: __dirname,
+    env: childEnv,
+    stdio: "inherit",
+  });
+
+  if (child.error) {
+    throw child.error;
+  }
+  if (child.status !== 0) {
+    process.exitCode = child.status || 1;
   }
 }
 
@@ -66,26 +72,20 @@ function prepareJdCookie() {
   console.log("已从 JD_COOKIE 生成 jdCookie.js，账号数量：" + cookies.length);
 }
 
-function hideCiEnvironment() {
+function buildChildEnvironment() {
   const prefixes = ["GITHUB_", "RUNNER_", "ACTIONS_"];
   const exactKeys = new Set(["CI"]);
-  const hidden = {};
+  const childEnv = { ...process.env };
 
-  for (const key of Object.keys(process.env)) {
+  for (const key of Object.keys(childEnv)) {
     if (exactKeys.has(key) || prefixes.some((prefix) => key.startsWith(prefix))) {
-      hidden[key] = process.env[key];
-      delete process.env[key];
+      delete childEnv[key];
     }
   }
 
-  console.log("已临时隐藏 GitHub Actions/CI 环境标识，避免上游脚本静默退出");
-  return hidden;
-}
-
-function restoreEnvironment(hidden) {
-  for (const [key, value] of Object.entries(hidden)) {
-    process.env[key] = value;
-  }
+  childEnv.ONEVAL = "true";
+  console.log("已为子进程隐藏 GitHub Actions/CI 环境标识，避免上游脚本静默退出");
+  return childEnv;
 }
 
 function downloadText(url, redirectCount = 0) {
