@@ -16,6 +16,8 @@ main().catch((error) => {
 
 async function main() {
   prepareJdCookie();
+  process.env.ONEVAL = "true";
+  console.log("已内置 ONEVAL=true，允许执行评价流程");
 
   if (process.env.JD_AUTOEVAL_SELF_TEST === "1") {
     console.log("JD AutoEval Action 自检通过");
