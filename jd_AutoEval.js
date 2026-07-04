@@ -29,11 +29,13 @@ async function main() {
   console.log("上游脚本下载完成，长度：" + source.length);
 
   const upstreamPath = path.join(__dirname, "jd_AutoEval.upstream.js");
+  const instrumentPath = path.join(__dirname, "jd_AutoEval.instrument.js");
   fs.writeFileSync(upstreamPath, source);
+  fs.writeFileSync(instrumentPath, buildInstrumentSource());
   console.log("已写入上游脚本：" + upstreamPath);
 
   const childEnv = buildChildEnvironment();
-  const child = spawnSync(process.execPath, [upstreamPath], {
+  const child = spawnSync(process.execPath, ["--require", instrumentPath, upstreamPath], {
     cwd: __dirname,
     env: childEnv,
     stdio: "inherit",
@@ -45,6 +47,117 @@ async function main() {
   if (child.status !== 0) {
     process.exitCode = child.status || 1;
   }
+}
+
+function buildInstrumentSource() {
+  return String.raw`
+"use strict";
+
+const Module = require("module");
+const originalLoad = Module._load;
+
+Module._load = function patchedLoad(request, parent, isMain) {
+  const loaded = originalLoad.apply(this, arguments);
+  if (request !== "got" || loaded.__jdAutoEvalInstrumented) {
+    return loaded;
+  }
+  return instrumentGot(loaded);
+};
+
+function instrumentGot(got) {
+  const wrapped = wrapRequest(got, "REQUEST");
+  Object.setPrototypeOf(wrapped, Object.getPrototypeOf(got));
+
+  for (const key of Reflect.ownKeys(got)) {
+    const descriptor = Object.getOwnPropertyDescriptor(got, key);
+    if (!descriptor) continue;
+    if (typeof descriptor.value === "function" && ["get", "post", "put", "patch", "delete", "head"].includes(String(key))) {
+      descriptor.value = wrapRequest(descriptor.value, String(key).toUpperCase());
+    }
+    try {
+      Object.defineProperty(wrapped, key, descriptor);
+    } catch (_) {}
+  }
+
+  Object.defineProperty(wrapped, "__jdAutoEvalInstrumented", { value: true });
+  return wrapped;
+}
+
+function wrapRequest(fn, method) {
+  return function wrappedRequest(input, options) {
+    const requestUrl = extractUrl(input, options);
+    const promise = fn.apply(this, arguments);
+    observePromise(promise, method, requestUrl);
+    return promise;
+  };
+}
+
+function observePromise(promise, method, requestUrl) {
+  if (!promise || typeof promise.then !== "function" || !shouldLog(requestUrl)) {
+    return;
+  }
+
+  promise.then(
+    (response) => {
+      const statusCode = response && response.statusCode ? response.statusCode : "NO_STATUS";
+      console.log("[HTTP " + statusCode + "] " + method + " " + formatUrl(requestUrl));
+      console.log("[HTTP BODY] " + summarizeBody(response && response.body));
+    },
+    (error) => {
+      const response = error && error.response;
+      const statusCode = response && response.statusCode ? response.statusCode : "NO_RESPONSE";
+      const message = error && error.message ? error.message : String(error);
+      console.log("[HTTP ERROR " + statusCode + "] " + method + " " + formatUrl(requestUrl) + " message=" + message);
+      console.log("[HTTP BODY] " + summarizeBody(response && response.body));
+    }
+  );
+}
+
+function extractUrl(input, options) {
+  if (typeof input === "string") return input;
+  if (input && typeof input.href === "string") return input.href;
+  if (input && input.url) return String(input.url);
+  if (options && options.url) return String(options.url);
+  return "";
+}
+
+function shouldLog(requestUrl) {
+  return /api\.m\.jd\.com|plogin\.m\.jd\.com|6dy\.oss-cn-hangzhou\.aliyuncs\.com/.test(requestUrl || "");
+}
+
+function formatUrl(requestUrl) {
+  try {
+    const url = new URL(requestUrl);
+    const functionId = url.searchParams.get("functionId");
+    return url.origin + url.pathname + (functionId ? "?functionId=" + functionId : "");
+  } catch (_) {
+    return requestUrl || "UNKNOWN_URL";
+  }
+}
+
+function summarizeBody(body) {
+  if (body === undefined) return "undefined";
+  if (body === null) return "null";
+
+  const text = Buffer.isBuffer(body) ? body.toString("utf8") : String(body);
+  try {
+    const data = JSON.parse(text);
+    const info = {
+      code: data.code,
+      errCode: data.errCode,
+      message: data.message || data.errMsg || data.msg,
+      hasCommentWareListInfo: Boolean(data.commentWareListInfo),
+      commentWareListCount: Array.isArray(data.commentWareListInfo && data.commentWareListInfo.commentWareList)
+        ? data.commentWareListInfo.commentWareList.length
+        : undefined,
+      keys: Object.keys(data).slice(0, 12),
+    };
+    return JSON.stringify(info);
+  } catch (_) {
+    return text.replace(/\s+/g, " ").slice(0, 500);
+  }
+}
+`;
 }
 
 function prepareJdCookie() {
