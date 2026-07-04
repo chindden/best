@@ -85,11 +85,33 @@ function instrumentGot(got) {
 
 function wrapRequest(fn, method) {
   return function wrappedRequest(input, options) {
-    const requestUrl = extractUrl(input, options);
-    const promise = fn.apply(this, arguments);
+    const args = Array.from(arguments);
+    args[0] = rewriteApiUrl(args[0]);
+    const requestUrl = extractUrl(args[0], options);
+    const promise = fn.apply(this, args);
     observePromise(promise, method, requestUrl);
     return promise;
   };
+}
+
+function rewriteApiUrl(input) {
+  if (typeof input === "string") {
+    return input.replace(/^http:\/\/api\.m\.jd\.com\//, "https://api.m.jd.com/");
+  }
+
+  if (input && typeof input === "object") {
+    if (typeof input.href === "string" && input.href.startsWith("http://api.m.jd.com/")) {
+      return new URL(input.href.replace(/^http:\/\/api\.m\.jd\.com\//, "https://api.m.jd.com/"));
+    }
+
+    if (typeof input.url === "string" && input.url.startsWith("http://api.m.jd.com/")) {
+      return Object.assign({}, input, {
+        url: input.url.replace(/^http:\/\/api\.m\.jd\.com\//, "https://api.m.jd.com/"),
+      });
+    }
+  }
+
+  return input;
 }
 
 function observePromise(promise, method, requestUrl) {
@@ -107,7 +129,9 @@ function observePromise(promise, method, requestUrl) {
       const response = error && error.response;
       const statusCode = response && response.statusCode ? response.statusCode : "NO_RESPONSE";
       const message = error && error.message ? error.message : String(error);
-      console.log("[HTTP ERROR " + statusCode + "] " + method + " " + formatUrl(requestUrl) + " message=" + message);
+      const code = error && error.code ? " code=" + error.code : "";
+      const name = error && error.name ? " name=" + error.name : "";
+      console.log("[HTTP ERROR " + statusCode + "] " + method + " " + formatUrl(requestUrl) + " message=" + message + code + name);
       console.log("[HTTP BODY] " + summarizeBody(response && response.body));
     }
   );
