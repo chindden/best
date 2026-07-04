@@ -28,6 +28,7 @@ let signEnv = null;
 async function main() {
     console.log("🔔京东保价, 开始!");
     console.log(`Node 版本：${process.version}`);
+    await logRunnerIp();
 
     const cookies = collectCookies(process.env.JD_COOKIE || "");
     if (!cookies.length) {
@@ -147,6 +148,8 @@ async function generateH5st(signRequest) {
     if (h5st || signEnv.skipRac || process.env.JD_PRICE_DISABLE_SIGN_FALLBACK === "1") return h5st;
 
     console.log("完整签名环境未生成 h5st，切换为跳过 RAC 扩展后重试...");
+    closeSignEnv(signEnv);
+    signEnv = null;
     signEnv = await withTimeout(initSignEnv(true), SIGN_ENV_TIMEOUT_MS, "备用签名环境初始化超时");
     h5st = await tryGenerateH5st(signRequest, signEnv, 2);
     return h5st;
@@ -660,6 +663,59 @@ function collectCookies(value) {
         .filter(item => item.includes("pt_key=") && item.includes("pt_pin="));
 }
 
+async function logRunnerIp() {
+    const endpoints = [
+        {
+            name: "ipify",
+            url: "https://api.ipify.org?format=json",
+            parse: text => (parseJson(text) || {}).ip
+        },
+        {
+            name: "icanhazip",
+            url: "https://icanhazip.com",
+            parse: text => String(text || "").trim()
+        },
+        {
+            name: "ifconfig.me",
+            url: "https://ifconfig.me/ip",
+            parse: text => String(text || "").trim()
+        }
+    ];
+
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetchWithTimeout(endpoint.url, {
+                headers: {
+                    Accept: "text/plain, application/json",
+                    "User-Agent": USER_AGENT
+                }
+            }, 5000);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const ip = endpoint.parse(await response.text());
+            if (ip) {
+                console.log(`当前运行公网 IP：${ip}（来源：${endpoint.name}）`);
+                return;
+            }
+        } catch (err) {
+            console.log(`公网 IP 获取失败：${endpoint.name}，${err && err.message ? err.message : err}`);
+        }
+    }
+    console.log("当前运行公网 IP：获取失败");
+}
+
+async function fetchWithTimeout(url, options, ms) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), ms);
+    try {
+        return await fetch(url, {
+            ...options,
+            signal: controller.signal
+        });
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
 function logBusinessResult(data, result) {
     console.log("业务结果明细：");
     console.log(`code：${formatValue(data.code)}`);
@@ -770,7 +826,18 @@ function withTimeout(promise, ms, message) {
     });
 }
 
-main().catch(err => {
-    console.error(`\n❌ 京东保价执行失败：${formatError(err)}`);
-    process.exitCode = 1;
-});
+function closeSignEnv(env) {
+    if (!env || !env.window || typeof env.window.close !== "function") return;
+    try {
+        env.window.close();
+    } catch (_) {}
+}
+
+main()
+    .catch(err => {
+        console.error(`\n❌ 京东保价执行失败：${formatError(err)}`);
+        process.exitCode = 1;
+    })
+    .finally(() => {
+        closeSignEnv(signEnv);
+    });
