@@ -1,0 +1,29 @@
+name: JD Price Protection
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "18 2 * * 1"
+
+jobs:
+  jd-prices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install runtime dependencies
+        run: npm install --no-save jsdom@22.1.0
+
+      - name: Run JD price protection
+        env:
+          JD_COOKIE: ${{ secrets.JD_COOKIE }}
+          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
+        run: node jd_prices.js
