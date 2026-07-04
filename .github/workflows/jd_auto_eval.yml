@@ -1,0 +1,57 @@
+name: JD Auto Eval
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "18 2 * * 1"
+
+jobs:
+  jd-auto-eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Print runner public IP
+        run: |
+          echo "Runner public IP:"
+          curl -fsSL https://api.ipify.org || true
+          echo
+
+      - name: Install runtime dependencies
+        run: |
+          npm install --no-save \
+            got@11.8.6 \
+            tough-cookie@4.1.4 \
+            axios@1.7.9 \
+            crypto-js@4.2.0 \
+            https-proxy-agent@5.0.1 \
+            tunnel@0.0.6 \
+            big-integer@1.6.52 \
+            dotenv@16.4.7 \
+            sharp@0.33.5
+
+      - name: Prepare JD helper modules
+        run: |
+          mkdir -p function
+          base="https://raw.githubusercontent.com/shufflewzc/faker2/refs/heads/main"
+          curl -fsSL "$base/sendNotify.js" -o sendNotify.js
+          curl -fsSL "$base/USER_AGENTS.js" -o USER_AGENTS.js
+          curl -fsSL "$base/ql.js" -o ql.js
+          curl -fsSL "$base/function/dylanx.js" -o function/dylanx.js
+          curl -fsSL "$base/function/dylib.js" -o function/dylib.js
+          curl -fsSL "$base/function/dyland.js" -o function/dyland.js
+          curl -fsSL "$base/function/proxy.js" -o function/proxy.js
+
+      - name: Run JD auto eval
+        env:
+          JD_COOKIE: ${{ secrets.JD_COOKIE }}
+          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
+        run: node jd_AutoEval.js
