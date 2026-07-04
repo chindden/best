@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Print runner public IP
         run: |
@@ -54,4 +54,6 @@ jobs:
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
-        run: node jd_AutoEval.js
+        run: |
+          node -v
+          node jd_AutoEval.js
