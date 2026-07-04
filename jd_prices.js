@@ -25,11 +25,6 @@ const SIGN_ENV_TIMEOUT_MS = Number(process.env.JD_PRICE_SIGN_ENV_TIMEOUT_MS || 4
 
 let signEnv = null;
 
-main().catch(err => {
-    console.error(`\n❌ 京东保价执行失败：${formatError(err)}`);
-    process.exitCode = 1;
-});
-
 async function main() {
     console.log("🔔京东保价, 开始!");
     console.log(`Node 版本：${process.version}`);
@@ -42,6 +37,10 @@ async function main() {
 
     console.log(`检测到 Cookie 数量：${cookies.length}`);
     signEnv = await withTimeout(initSignEnv(process.env.JD_PRICE_SKIP_RAC === "1"), SIGN_ENV_TIMEOUT_MS, "签名环境初始化超时");
+    if (process.env.JD_PRICE_SIGN_ENV_ONLY === "1") {
+        console.log("JD_PRICE_SIGN_ENV_ONLY=1，仅验证签名环境初始化，不提交保价接口。");
+        return;
+    }
 
     const summaries = [];
     for (let index = 0; index < cookies.length; index++) {
@@ -770,3 +769,8 @@ function withTimeout(promise, ms, message) {
         if (timer) clearTimeout(timer);
     });
 }
+
+main().catch(err => {
+    console.error(`\n❌ 京东保价执行失败：${formatError(err)}`);
+    process.exitCode = 1;
+});
