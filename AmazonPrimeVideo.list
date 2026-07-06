@@ -31,5 +31,6 @@ DOMAIN-SUFFIX,primevideo.tv
 DOMAIN-SUFFIX,pv-cdn.net
 DOMAIN-SUFFIX,ssl-images-amazon.com
 DOMAIN-KEYWORD,avoddashs
+DOMAIN-KEYWORD,amazon.akamaized.net
 USER-AGENT,InstantVideo.US*
 USER-AGENT,Prime%20Video*
