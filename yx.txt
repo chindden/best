@@ -1,5 +1,4 @@
 154.31.117.232#154.31.117.232-JP-DMIT
-154.31.116.211#154.31.116.211-JP-DMIT
 154.12.191.222#154.12.191.222-JP-DMIT
 108.162.198.110#108.162.198.110-JP-DMIT
 162.159.38.86#162.159.38.86-JP
@@ -12,8 +11,6 @@ download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
 cn.tencentapp.cn:2053#tencentapp.cn-JP
 saas.sin.fan:2053#saas.sin.fan-JP
 
-
-154.12.188.114#154.12.188.114-HK-DMIT
 
 cdn.814046.xyz:2053#cdn.814046.xyz-SG
 cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
