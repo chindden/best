@@ -3,7 +3,7 @@ name: JD Price Protection
 on:
   workflow_dispatch:
   schedule:
-    - cron: "25 0 * * *"
+    - cron: "25 0 * * */3"
 
 jobs:
   jd-prices:
