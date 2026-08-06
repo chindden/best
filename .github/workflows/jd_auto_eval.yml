@@ -3,7 +3,7 @@ name: JD Auto Eval
 on:
   workflow_dispatch:
   schedule:
-    - cron: "18 3 * * *"
+    - cron: "18 3 * * */3"
 
 jobs:
   jd-auto-eval:
