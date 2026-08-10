@@ -4,7 +4,7 @@
 [2606:4700:57::4950:a6ce]:443#IPV6-JP
 box.badd.cc:2053#box.badd.cc-JP
 162.159.44.238:2096#162.159.44.238-JP
-
+ct.877774.xyz:8443#ct.877774.xyz-JP
 download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
 saas.sin.fan:2053#saas.sin.fan-JP
 
