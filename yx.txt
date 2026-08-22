@@ -7,8 +7,6 @@
 
 ct.877774.xyz:8443#ct.877774.xyz-JP
 box.badd.cc:2053#box.badd.cc-JP
-download.yunzhongzhuan.com:2053#download.yunzhongzhuan.com-JP
-saas.sin.fan:2053#saas.sin.fan-JP
 
 www.bangbenjiaju.com:2087#www.bangbenjiaju.com-SG
 cdn.814046.xyz:2053#cdn.814046.xyz-SG
