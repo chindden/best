@@ -14,6 +14,7 @@ www.bangbenjiaju.com:2087#www.bangbenjiaju.com-SG
 cd.cloudflare.182682.xyz:2053#cloudflare.182682.xyz-SG
 172.64.151.3:2053#172.64.151.3-SG
 cf.090227.xyz:2053#cf.090227.xyz-SG
+[2803:f800:52::]#2803:f800:53-SG
 [2a06:98c1:50::8ca8:e33c]#2a06:98c1:50::8ca8:e33c-SG
 [2606:4700:440b::]#2606:4700:440b-SG
 [2606:4700:440a::]#2606:4700:440a-SG
