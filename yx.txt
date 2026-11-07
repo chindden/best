@@ -43,7 +43,8 @@ cf.090227.xyz:2053#cf.090227.xyz-SG
 #154.17.227.99:12345#154.17.227.99-US
 
 www.touchgal.top#touchgal.top-US
-www.w3.org#w3.org-US
+w3.org#w3.org-US
+pages.dev#pages.dev-US
 fbi.gov:2053#fbi.gov-US
 
 [2606:4700::]:8443#IPV6-US
