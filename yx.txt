@@ -10,7 +10,7 @@ box.badd.cc:2053#box.badd.cc-JP
 [2606:4700:52::]:443#2606:4700:52-JP
 [2606:4700:57::4950:a6ce]:443#IPV6-JP
 ct.877774.xyz:8443#ct.877774.xyz-JP
-
+www.touchgal.top#touchgal.top-JP
 
 172.64.156.126:2096#172.64.156.126-SG
 172.64.151.3:2053#172.64.151.3-SG
@@ -41,7 +41,7 @@ ct.877774.xyz:8443#ct.877774.xyz-JP
 #154.17.4.128:12345#154.17.4.128-US
 #154.17.227.99:12345#154.17.227.99-US
 
-www.touchgal.top#touchgal.top-US
+
 w3.org#w3.org-US
 pages.dev#pages.dev-US
 fbi.gov:2053#fbi.gov-US
